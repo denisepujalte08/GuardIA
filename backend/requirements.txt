@@ -1,4 +1,12 @@
-fastapi==0.115.0
-uvicorn[standard]==0.30.6
-pydantic==2.9.2
-spacy==3.7.5
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.9
+
+# spaCy queda comentado a propósito: todavía no se usa en el código
+# (ver el punto de extensión "analizar_con_nlp" en app/detection.py).
+# Requiere Python 3.10-3.12 para instalar sin problemas -- con
+# versiones más nuevas de Python (3.13+) suele fallar la compilación
+# de sus dependencias (blis, thinc) por falta de paquetes precompilados.
+# Descomentar cuando se implemente esa parte, idealmente con un venv
+# armado específicamente con Python 3.11.
+# spacy==3.7.5
