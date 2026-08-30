@@ -1,0 +1,19 @@
+# --- Backend (Python) ---
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/.env
+*.pyc
+
+# --- Dashboard (Node) ---
+dashboard/node_modules/
+dashboard/dist/
+dashboard/.env
+
+# --- Extensión ---
+extension/*.zip
+
+# --- Sistema operativo / editores ---
+.DS_Store
+.vscode/
+*.log
