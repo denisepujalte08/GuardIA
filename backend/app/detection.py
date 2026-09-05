@@ -49,7 +49,7 @@ REGLAS: list[Regla] = [
     Regla(
         tipo="CUIT/CUIL",
         patron=re.compile(r"\b\d{2}-?\d{8}-?\d\b"),
-        nivel="alto",
+        nivel="critico",
         mensaje=(
             "El CUIT/CUIL es un identificador personal protegido por la Ley 25.326. "
             "Enviarlo a una IA externa lo expone fuera del control de la empresa."
@@ -58,7 +58,7 @@ REGLAS: list[Regla] = [
     Regla(
         tipo="CBU",
         patron=re.compile(r"\b\d{22}\b"),
-        nivel="alto",
+        nivel="critico",
         mensaje="Detectamos un CBU en el texto: es información financiera sensible de un cliente o de la empresa.",
     ),
     Regla(
@@ -68,9 +68,21 @@ REGLAS: list[Regla] = [
         mensaje="El texto parece incluir una credencial o clave de acceso, lo que puede comprometer sistemas de la empresa.",
     ),
     Regla(
+        tipo="DNI",
+        patron=re.compile(r"\b\d{1,2}\.\d{3}\.\d{3}\b|\b\d{7,8}\b"),
+        nivel="alto",
+        mensaje="Detectamos un DNI en el texto: es un dato personal protegido por la Ley 25.326.",
+    ),
+    Regla(
+        tipo="Teléfono",
+        patron=re.compile(r"\b(?:\+?54[\s.-]?)?(?:9[\s.-]?)?\d{2,4}[\s.-]\d{6,8}\b|\b\d{10}\b"),
+        nivel="alto",
+        mensaje="Detectamos un número de teléfono en el texto: puede tratarse de un dato personal de un cliente o proveedor.",
+    ),
+    Regla(
         tipo="Correo electrónico",
         patron=re.compile(r"[\w.+-]+@[\w-]+\.[a-zA-Z]{2,}"),
-        nivel="medio",
+        nivel="alto",
         mensaje="Detectamos una dirección de correo electrónico, posible dato personal de un cliente o proveedor.",
     ),
 ]
