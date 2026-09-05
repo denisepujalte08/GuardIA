@@ -24,6 +24,10 @@ import re
 from dataclasses import dataclass
 from typing import Optional
 
+import spacy
+
+_nlp = spacy.load("es_core_news_sm")
+
 
 @dataclass
 class ResultadoAnalisis:
@@ -93,32 +97,39 @@ def analizar_con_reglas(texto: str) -> Optional[ResultadoAnalisis]:
     return None
 
 
+_ETIQUETAS_ENTIDAD = {
+    "PER": (
+        "Nombre de persona",
+        "Detectamos el nombre de una persona en el texto. Puede tratarse de un dato personal "
+        "de un cliente, empleado o proveedor; compartirlo con una IA externa puede exponer "
+        "información protegida por la Ley 25.326.",
+    ),
+    "ORG": (
+        "Nombre de organización",
+        "Detectamos el nombre de una organización o empresa en el texto. Puede tratarse de un "
+        "dato comercial sensible (un cliente, proveedor o competidor); conviene revisar si es "
+        "necesario incluirlo antes de enviarlo a una IA externa.",
+    ),
+}
+
+
 def analizar_con_nlp(texto: str) -> Optional[ResultadoAnalisis]:
     """
-    PUNTO DE EXTENSIÓN PARA DENISE.
-
-    Acá va la capa de NLP/NER con spaCy: detección de nombres propios,
-    organizaciones, código propietario y demás casos que no se resuelven
-    con un patrón fijo. Por ahora no hace nada (devuelve None), para que
-    `analizar_texto` caiga siempre en las reglas por regex.
-
-    Sugerencia de forma de implementación, para no romper el contrato:
-
-        import spacy
-        _nlp = spacy.load("es_core_news_sm")
-
-        def analizar_con_nlp(texto: str) -> Optional[ResultadoAnalisis]:
-            doc = _nlp(texto)
-            for ent in doc.ents:
-                if ent.label_ in ("PER", "ORG"):
-                    return ResultadoAnalisis(
-                        nivel_riesgo="medio",
-                        tipo_dato_detectado=f"Entidad detectada ({ent.label_})",
-                        fragmento_detectado=ent.text,
-                        mensaje_contextual="...",
-                    )
-            return None
+    Detección de entidades nombradas (NER) con spaCy: cubre nombres propios y
+    organizaciones que no siguen un patrón fijo y por eso no son capturables
+    con expresiones regulares. Solo se ejecuta cuando `analizar_con_reglas`
+    no encontró nada, según el orden definido en `analizar_texto`.
     """
+    doc = _nlp(texto)
+    for ent in doc.ents:
+        if ent.label_ in _ETIQUETAS_ENTIDAD:
+            tipo, mensaje = _ETIQUETAS_ENTIDAD[ent.label_]
+            return ResultadoAnalisis(
+                nivel_riesgo="medio",
+                tipo_dato_detectado=tipo,
+                fragmento_detectado=ent.text,
+                mensaje_contextual=mensaje,
+            )
     return None
 
 
