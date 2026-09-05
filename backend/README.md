@@ -5,11 +5,14 @@ Responsable: Denise Pujalte.
 
 ## Cómo correrlo
 
+Requiere **Python 3.11** (ver `.python-version`): spaCy no instala de forma confiable con Python 3.13+ porque sus dependencias (`blis`, `thinc`) no tienen paquetes precompilados para esas versiones.
+
 ```bash
 cd backend
-python -m venv .venv
+py -3.11 -m venv .venv        # en Linux/Mac: python3.11 -m venv .venv
 source .venv/bin/activate    # en Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+python -m spacy download es_core_news_sm
 uvicorn app.main:app --reload --port 8000
 ```
 
