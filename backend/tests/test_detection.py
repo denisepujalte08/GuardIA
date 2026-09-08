@@ -63,6 +63,17 @@ def test_nombre_propio_es_riesgo_medio_via_nlp():
     assert resultado.tipo_dato_detectado in ("Nombre de persona", "Nombre de organización")
 
 
+def test_codigo_con_termino_propietario_es_riesgo_alto():
+    resultado = analizar_texto("def calcular(cliente): return cliente.total  # parte del sistema interno")
+    assert resultado.nivel_riesgo == "alto"
+    assert resultado.tipo_dato_detectado == "Código o información propietaria"
+
+
+def test_codigo_generico_sin_termino_propietario_es_riesgo_bajo():
+    resultado = analizar_texto("def ordenar_lista(numeros): return sorted(numeros)")
+    assert resultado.nivel_riesgo == "bajo"
+
+
 def test_reglas_regex_tienen_prioridad_sobre_nlp():
     # Un texto con un CUIT y también un nombre propio debe clasificarse
     # por la regla (más precisa) y no caer en la rama de NLP.

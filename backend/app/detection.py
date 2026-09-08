@@ -88,6 +88,42 @@ REGLAS: list[Regla] = [
 ]
 
 
+TERMINOS_PROPIETARIOS = [
+    "sistema interno",
+    "proyecto confidencial",
+    # Lista de ejemplo. En una PyME real, se completaría con los nombres
+    # propios de sus sistemas, productos o proyectos internos.
+]
+
+_PATRON_CODIGO = re.compile(r"\b(def|function|class|const|var|let|import)\b|[{};]")
+_PATRON_TERMINO_PROPIETARIO = re.compile(
+    r"\b(" + "|".join(re.escape(t) for t in TERMINOS_PROPIETARIOS) + r")\b",
+    re.IGNORECASE,
+)
+
+
+def analizar_codigo_propietario(texto: str) -> Optional[ResultadoAnalisis]:
+    """
+    Detecta código fuente combinado con una referencia a un término propio
+    de la empresa (configurable en TERMINOS_PROPIETARIOS). Exigir ambas
+    señales a la vez evita marcar como riesgo cualquier código genérico
+    (por ejemplo, un ejercicio de programación sin nada sensible).
+    """
+    match_termino = _PATRON_TERMINO_PROPIETARIO.search(texto)
+    if _PATRON_CODIGO.search(texto) and match_termino:
+        return ResultadoAnalisis(
+            nivel_riesgo="alto",
+            tipo_dato_detectado="Código o información propietaria",
+            fragmento_detectado=match_termino.group(0),
+            mensaje_contextual=(
+                "El texto parece contener código junto con una referencia a un sistema o "
+                "proyecto interno de la empresa. Compartir código propietario con una IA "
+                "externa puede exponer lógica de negocio o secretos comerciales."
+            ),
+        )
+    return None
+
+
 def _extraer_fragmento(texto: str, match: re.Match) -> str:
     inicio = max(0, match.start() - 20)
     fin = min(len(texto), match.end() + 10)
@@ -155,6 +191,21 @@ def analizar_texto(texto: str) -> ResultadoAnalisis:
     resultado = analizar_con_reglas(texto)
     if resultado:
         return resultado
+
+    resultado = analizar_codigo_propietario(texto)
+    if resultado:
+        return resultado
+
+    if _PATRON_CODIGO.search(texto):
+        # Es código sin ningún término propietario: no se manda a la capa
+        # de NLP, que no es confiable con sintaxis de código (spaCy puede
+        # confundir identificadores de código con nombres de organización).
+        return ResultadoAnalisis(
+            nivel_riesgo="bajo",
+            tipo_dato_detectado=None,
+            fragmento_detectado=None,
+            mensaje_contextual=None,
+        )
 
     resultado = analizar_con_nlp(texto)
     if resultado:

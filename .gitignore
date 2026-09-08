@@ -18,4 +18,5 @@ extension/*.zip
 # --- Sistema operativo / editores ---
 .DS_Store
 .vscode/
+.claude/
 *.log
