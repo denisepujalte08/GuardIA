@@ -25,16 +25,31 @@ backend/
 ├── app/
 │   ├── main.py         # Endpoints (POST /analizar, PATCH /eventos/{id}, GET /eventos)
 │   ├── schemas.py       # Contrato formal (Pydantic) compartido con extensión y dashboard
-│   ├── detection.py      # Motor de reglas/regex + punto de extensión para NLP (spaCy)
-│   └── store.py          # Registro de eventos en memoria (reemplazable por DB)
+│   ├── detection.py      # Motor de reglas/regex + NLP (spaCy) + código propietario
+│   └── store.py          # Registro de eventos persistido en SQLite (backend/dlp.db)
+├── tests/
+│   └── test_detection.py # Pruebas unitarias del motor de detección
 ├── requirements.txt
 └── .env.example
 ```
 
-## Próximos pasos (Etapa 3)
+## Motor de detección — estado actual
 
-- Completar `analizar_con_nlp()` en `detection.py` con spaCy (NER de
-  nombres propios, organizaciones, código propietario).
-- Reemplazar `store.py` (en memoria) por una base de datos persistente.
-- Sumar tests unitarios sobre las reglas de detección con el dataset
-  sintético mencionado en el marco conceptual.
+- Reglas por expresiones regulares: CUIT/CUIL, CBU, credenciales/tokens,
+  DNI, teléfono, correo electrónico.
+- NLP con spaCy (`es_core_news_sm`): detección de nombres propios y
+  organizaciones en texto libre.
+- Detección de código propietario: combina sintaxis de código con una
+  lista configurable de términos propios de la empresa
+  (`TERMINOS_PROPIETARIOS` en `detection.py`).
+- Registro de eventos persistido en SQLite (`backend/dlp.db`, no se
+  versiona — ver `.gitignore`).
+- 12 pruebas unitarias en `tests/test_detection.py` (correr con
+  `python -m pytest -v` desde `backend/`).
+
+## Próximos pasos (Etapa 4)
+
+- Construir el dataset sintético de textos (seguros, sospechosos,
+  críticos) para medir precisión, recall, falsos positivos/negativos y
+  tiempo de respuesta.
+- Ajustar reglas y umbrales a partir de los resultados obtenidos.

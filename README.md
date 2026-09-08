@@ -24,10 +24,14 @@ puntuales.
 Se necesitan 3 terminales abiertas en simultáneo:
 
 **1. Backend**
+
+Requiere Python 3.11 (ver `backend/.python-version` y el README del backend para el detalle).
+
 ```bash
 cd backend
-python -m venv .venv && source .venv/bin/activate
+py -3.11 -m venv .venv && .venv\Scripts\activate    # en Linux/Mac: python3.11 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+python -m spacy download es_core_news_sm
 uvicorn app.main:app --reload --port 8000
 ```
 
@@ -44,8 +48,7 @@ En `chrome://extensions`: activar "Modo de desarrollador" → "Cargar
 descomprimida" → seleccionar la carpeta `extension/`.
 
 Con el backend corriendo, la extensión ya analiza contra el motor real
-(reglas por ahora; NLP con spaCy es el próximo paso de Denise) en vez
-del mock local.
+(reglas + NLP con spaCy) en vez del mock local.
 
 ## Subir esto a Git / GitHub
 
@@ -78,13 +81,14 @@ y luego Pull Request a `main` cuando cada parte esté lista para
 integrarse, en vez de commitear directo a `main` para evitar pisarse
 código entre las dos.
 
-## Próximos pasos (Etapa 3 / Etapa 4)
+## Próximos pasos (Etapa 4)
 
-- Denise: completar `analizar_con_nlp()` en `backend/app/detection.py`
-  con spaCy, y reemplazar el store en memoria por una base de datos.
-- Zaira: validar los selectores de `extension/site-adapters.js` contra
-  el DOM real de cada sitio, y sumar el historial de simulaciones al
-  dashboard.
+- Denise: construir el dataset sintético de prueba y medir precisión,
+  recall, falsos positivos/negativos y tiempo de respuesta del motor
+  de detección (ver `backend/README.md`).
+- Zaira: corregir el selector del botón de envío de ChatGPT en
+  `extension/site-adapters.js` (no reconoce el aria-label en español),
+  y sumar el historial de simulaciones al dashboard.
 - Ambas: correr los casos de prueba de los tres perfiles de empleado
   definidos en el marco conceptual, para alimentar la matriz de
   resultados de la Etapa 4.
