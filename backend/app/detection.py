@@ -24,6 +24,10 @@ import re
 from dataclasses import dataclass
 from typing import Optional
 
+import spacy
+
+_nlp = spacy.load("es_core_news_sm")
+
 
 @dataclass
 class ResultadoAnalisis:
@@ -45,7 +49,7 @@ REGLAS: list[Regla] = [
     Regla(
         tipo="CUIT/CUIL",
         patron=re.compile(r"\b\d{2}-?\d{8}-?\d\b"),
-        nivel="alto",
+        nivel="critico",
         mensaje=(
             "El CUIT/CUIL es un identificador personal protegido por la Ley 25.326. "
             "Enviarlo a una IA externa lo expone fuera del control de la empresa."
@@ -54,7 +58,7 @@ REGLAS: list[Regla] = [
     Regla(
         tipo="CBU",
         patron=re.compile(r"\b\d{22}\b"),
-        nivel="alto",
+        nivel="critico",
         mensaje="Detectamos un CBU en el texto: es información financiera sensible de un cliente o de la empresa.",
     ),
     Regla(
@@ -64,9 +68,21 @@ REGLAS: list[Regla] = [
         mensaje="El texto parece incluir una credencial o clave de acceso, lo que puede comprometer sistemas de la empresa.",
     ),
     Regla(
+        tipo="DNI",
+        patron=re.compile(r"\b\d{1,2}\.\d{3}\.\d{3}\b|\b\d{7,8}\b"),
+        nivel="alto",
+        mensaje="Detectamos un DNI en el texto: es un dato personal protegido por la Ley 25.326.",
+    ),
+    Regla(
+        tipo="Teléfono",
+        patron=re.compile(r"\b(?:\+?54[\s.-]?)?(?:9[\s.-]?)?\d{2,4}[\s.-]\d{6,8}\b|\b\d{10}\b"),
+        nivel="alto",
+        mensaje="Detectamos un número de teléfono en el texto: puede tratarse de un dato personal de un cliente o proveedor.",
+    ),
+    Regla(
         tipo="Correo electrónico",
         patron=re.compile(r"[\w.+-]+@[\w-]+\.[a-zA-Z]{2,}"),
-        nivel="medio",
+        nivel="alto",
         mensaje="Detectamos una dirección de correo electrónico, posible dato personal de un cliente o proveedor.",
     ),
 ]
@@ -93,32 +109,39 @@ def analizar_con_reglas(texto: str) -> Optional[ResultadoAnalisis]:
     return None
 
 
+_ETIQUETAS_ENTIDAD = {
+    "PER": (
+        "Nombre de persona",
+        "Detectamos el nombre de una persona en el texto. Puede tratarse de un dato personal "
+        "de un cliente, empleado o proveedor; compartirlo con una IA externa puede exponer "
+        "información protegida por la Ley 25.326.",
+    ),
+    "ORG": (
+        "Nombre de organización",
+        "Detectamos el nombre de una organización o empresa en el texto. Puede tratarse de un "
+        "dato comercial sensible (un cliente, proveedor o competidor); conviene revisar si es "
+        "necesario incluirlo antes de enviarlo a una IA externa.",
+    ),
+}
+
+
 def analizar_con_nlp(texto: str) -> Optional[ResultadoAnalisis]:
     """
-    PUNTO DE EXTENSIÓN PARA DENISE.
-
-    Acá va la capa de NLP/NER con spaCy: detección de nombres propios,
-    organizaciones, código propietario y demás casos que no se resuelven
-    con un patrón fijo. Por ahora no hace nada (devuelve None), para que
-    `analizar_texto` caiga siempre en las reglas por regex.
-
-    Sugerencia de forma de implementación, para no romper el contrato:
-
-        import spacy
-        _nlp = spacy.load("es_core_news_sm")
-
-        def analizar_con_nlp(texto: str) -> Optional[ResultadoAnalisis]:
-            doc = _nlp(texto)
-            for ent in doc.ents:
-                if ent.label_ in ("PER", "ORG"):
-                    return ResultadoAnalisis(
-                        nivel_riesgo="medio",
-                        tipo_dato_detectado=f"Entidad detectada ({ent.label_})",
-                        fragmento_detectado=ent.text,
-                        mensaje_contextual="...",
-                    )
-            return None
+    Detección de entidades nombradas (NER) con spaCy: cubre nombres propios y
+    organizaciones que no siguen un patrón fijo y por eso no son capturables
+    con expresiones regulares. Solo se ejecuta cuando `analizar_con_reglas`
+    no encontró nada, según el orden definido en `analizar_texto`.
     """
+    doc = _nlp(texto)
+    for ent in doc.ents:
+        if ent.label_ in _ETIQUETAS_ENTIDAD:
+            tipo, mensaje = _ETIQUETAS_ENTIDAD[ent.label_]
+            return ResultadoAnalisis(
+                nivel_riesgo="medio",
+                tipo_dato_detectado=tipo,
+                fragmento_detectado=ent.text,
+                mensaje_contextual=mensaje,
+            )
     return None
 
 
