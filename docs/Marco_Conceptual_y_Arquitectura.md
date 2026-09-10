@@ -98,10 +98,33 @@ Los criterios de detección y clasificación se alinean con los lineamientos de 
 
 ## 12. Evaluación de la demo
 
-> **Pendiente — sección a completar en la etapa de Simulación y Prueba:**
-> - Diseño de escenarios y perfiles de usuario para las simulaciones.
-> - Resultados de la evaluación de la intervención contextual frente al bloqueo genérico.
-> - Métricas de usabilidad y tasa de aceptación de alertas.
+La etapa de Simulación y Prueba se dividió en dos evaluaciones complementarias: una cuantitativa sobre el motor de detección (a cargo de Denise Pujalte) y otra de usabilidad sobre la intervención contextual (a cargo de Zaira Rosin), ambas apoyadas en un diseño experimental acordado en conjunto y documentado en `docs/perfiles_usuario.md` y `docs/diseno_simulacion_etapa4.md`.
+
+### 12.1. Evaluación cuantitativa del motor de detección
+
+Se construyó un dataset sintético de 36 casos (`backend/evaluacion/dataset.py`), distribuidos en tres categorías —seguros, sospechosos y críticos—, cada uno etiquetado con el nivel de riesgo y el tipo de dato que debía detectar el motor. Al correrlo contra `analizar_texto()` (`backend/evaluacion/correr_evaluacion.py`) se obtuvieron los siguientes resultados:
+
+| Métrica | Valor |
+|---|---|
+| Accuracy (nivel de riesgo exacto) | 80,6% |
+| Precisión (detección binaria: ¿sensible o no?) | 87,0% |
+| Recall | 83,3% |
+| F1-score | 85,1% |
+| Tiempo de respuesta promedio | 2,47 ms |
+
+Los casos en los que el motor no coincidió con lo esperado correspondieron, en su totalidad, a limitaciones del modelo de NLP (`es_core_news_sm`) y no a errores de las reglas por expresiones regulares: el modelo no reconoció como organizaciones a Acindar, Molinos Río de la Plata, Techint ni Mercado Libre (falsos negativos), y confundió palabras comunes como "inglés", "otoño" y "Windows" con entidades nombradas (falsos positivos). Un hallazgo intermedio del proceso de ajuste fue la corrección del patrón de teléfono, que originalmente no reconocía formatos con guion interno en la parte local del número (por ejemplo, `011 4444-5555`); una vez corregido, el accuracy general subió de 77,8% a 80,6%.
+
+### 12.2. Evaluación de usabilidad: intervención contextual vs. bloqueo genérico
+
+Se definieron tres perfiles de empleado (Cuidadoso, Apurado, Escéptico; ver `docs/perfiles_usuario.md`) y se implementó, además del modal de intervención contextual ya descripto en la Sección 8, una variante de "bloqueo genérico" que informa que el envío fue bloqueado por política de seguridad sin explicar el motivo, manteniendo las mismas opciones de acción disponibles según el nivel de riesgo (Sección 8). Ambas integrantes del proyecto actuaron, cada una por separado y en orden distinto, las 18 combinaciones posibles de perfil × condición × nivel de riesgo (excluyendo el nivel bajo, que no despliega modal en ninguna condición), totalizando 36 eventos registrados y filtrables por perfil y condición en el dashboard de administración.
+
+El hallazgo más claro de esta evaluación se dio en el perfil Cuidadoso: bajo la condición contextual, el 100% de los casos (6 de 6) resultaron en la acción "editar el texto"; bajo la condición de bloqueo genérico, el 100% de los casos (6 de 6) resultaron en "cancelar el envío". Es decir, cuando el sistema explica qué dato fue detectado y por qué es sensible, el usuario cuidadoso corrige su mensaje y continúa su tarea; cuando no recibe ninguna explicación, el mismo perfil opta por abandonar el envío directamente, al no saber qué corregir. Este resultado constituye evidencia empírica directa a favor del principio de intervención contextual planteado en la Sección 5, frente al bloqueo genérico que, según ese mismo apartado, "no genera aprendizaje" y "afecta la productividad y la autonomía del empleado".
+
+El perfil Apurado, en cambio, mostró un comportamiento idéntico en ambas condiciones (ignora la explicación disponible o no), consistente con su definición de comportamiento orientado a minimizar el esfuerzo. El perfil Escéptico mostró variabilidad entre condiciones, aunque con la salvedad metodológica de que su acción en cada caso quedó a criterio de quien actuaba el perfil en el momento, y no de una regla de decisión fija como en los otros dos perfiles.
+
+### 12.3. Limitaciones metodológicas
+
+La simulación fue actuada por las dos integrantes del proyecto —no por usuarios externos independientes—, debido a las restricciones de tiempo de la Práctica Profesional Supervisada. Se mitigó parcialmente este sesgo haciendo que cada una corriera el conjunto completo de 18 combinaciones de forma independiente y en un orden distinto, evitando así que un mismo efecto de práctica o cansancio contaminara ambas corridas de la misma manera. Una validación con usuarios reales de una PyME, ajenos al desarrollo del sistema, queda planteada como trabajo futuro (ver recomendaciones en el informe final).
 
 ## Referencias bibliográficas
 
