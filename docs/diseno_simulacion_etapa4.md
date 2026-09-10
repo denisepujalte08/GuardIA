@@ -88,7 +88,33 @@ Cómo se activa: desde el popup de la extensión, eligiendo `condicion:
    matriz de resultados: tasa de aceptación de alertas y comparación
    contextual vs. genérico, por perfil y por nivel de riesgo.
 
-Pendiente de definir (fuera del alcance técnico de este documento):
-cuántas repeticiones por combinación son necesarias para que la
-matriz de resultados sea representativa, y si las simulaciones las
-corren Denise y Zaira mismas actuando los perfiles, u otras personas.
+## 4. Alcance y protocolo acordado (cuántas corridas, quién las hace)
+
+**Alcance de la matriz**: el riesgo **bajo** no muestra modal en
+ninguna condición (se envía directo), así que no aporta nada a la
+comparación contextual vs. genérico y se excluye. Quedan
+**3 perfiles × 2 condiciones × 3 niveles (medio/alto/crítico) = 18
+combinaciones**.
+
+**Repeticiones y quién las corre**: Denise y Zaira corren, cada una por
+separado y sin coordinarse durante la corrida, las 18 combinaciones
+completas (36 corridas en total). Esto da 2 mediciones independientes
+por combinación — no reemplaza a usuarios externos reales, pero permite
+detectar si el resultado depende de quién actuó el perfil.
+
+**Orden de las combinaciones**: cada una arma su propio orden (distinto
+entre las dos) antes de empezar, para evitar que un efecto de
+práctica/cansancio a mitad de la tanda contamine la comparación de
+forma sistemática igual en ambas corridas.
+
+**Diferenciación de quién corrió qué**: no hace falta ningún campo
+nuevo — cada navegador genera su propio `usuario_id` aleatorio
+(persistido en `chrome.storage.local`), así que filtrando por
+`usuario_id` además de `perfil`/`condicion` en el dashboard se pueden
+comparar las dos corridas independientes.
+
+**Limitación metodológica a declarar en el informe final**: la
+simulación fue actuada por las mismas dos integrantes del proyecto, no
+por usuarios externos independientes, por las restricciones de tiempo
+de la PPS. Se mitiga parcialmente corriendo cada una el set completo de
+forma independiente y en orden distinto.
