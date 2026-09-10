@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>DLP - Modo simulación</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        width: 240px;
+        padding: 12px;
+        font-size: 13px;
+        color: #111827;
+      }
+      h3 {
+        margin: 0 0 8px;
+        font-size: 14px;
+      }
+      p.ayuda {
+        margin: 0 0 10px;
+        color: #6b7280;
+        font-size: 11px;
+      }
+      label {
+        display: block;
+        margin-top: 8px;
+        font-weight: 600;
+      }
+      label.checkbox {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+      }
+      select {
+        width: 100%;
+        margin-top: 3px;
+        padding: 4px;
+      }
+      button {
+        margin-top: 12px;
+        width: 100%;
+        padding: 6px;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background: #1d4ed8;
+        color: #fff;
+        font-weight: 600;
+      }
+      #estado {
+        margin-top: 8px;
+        font-size: 11px;
+        color: #16a34a;
+        min-height: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Modo simulación (Etapa 4)</h3>
+    <p class="ayuda">
+      Solo afecta los envíos hechos con la simulación activa: etiqueta el
+      evento con perfil/condición y, en condición "genérico", cambia el modal
+      a un bloqueo sin explicación.
+    </p>
+
+    <label class="checkbox"><input type="checkbox" id="activo" /> Simulación activa</label>
+
+    <label for="perfil">Perfil actuado</label>
+    <select id="perfil">
+      <option value="cuidadoso">Cuidadoso</option>
+      <option value="apurado">Apurado</option>
+      <option value="esceptico">Escéptico</option>
+    </select>
+
+    <label for="condicion">Condición</label>
+    <select id="condicion">
+      <option value="contextual">Contextual (con explicación)</option>
+      <option value="generico">Genérico (bloqueo sin explicación)</option>
+    </select>
+
+    <button id="guardar">Guardar</button>
+    <p id="estado"></p>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

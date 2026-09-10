@@ -3,7 +3,7 @@ import { obtenerEventos } from "./api.js";
 import EventsTable from "./components/EventsTable.jsx";
 import MetricsPanel from "./components/MetricsPanel.jsx";
 
-const FILTROS_INICIALES = { usuario_id: "", ia_destino: "", nivel_riesgo: "" };
+const FILTROS_INICIALES = { usuario_id: "", ia_destino: "", nivel_riesgo: "", perfil: "", condicion: "" };
 
 export default function App() {
   const [eventos, setEventos] = useState([]);

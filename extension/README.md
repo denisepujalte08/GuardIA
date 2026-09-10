@@ -31,6 +31,19 @@ flujo de desarrollo (ver `callBackend()` en `service-worker.js`).
    backend que la columna "Acción" se actualizó — confirma que el
    `PATCH /eventos/{id}` está sincronizando bien con el backend.
 
+## Modo simulación (Etapa 4)
+
+Para las simulaciones con perfiles de usuario (ver
+`../docs/perfiles_usuario.md` y `../docs/diseno_simulacion_etapa4.md`),
+la extensión tiene un popup (ícono en la barra de Chrome) donde se
+activa la simulación y se elige qué **perfil** se está actuando y con
+qué **condición** (`contextual` = modal con explicación de siempre,
+`generico` = modal de bloqueo sin explicación). Mientras está activa,
+esos dos datos viajan en cada `POST /analizar` y quedan guardados en
+el evento para poder filtrarlos después en el dashboard. Con la
+simulación desactivada, el comportamiento es exactamente el de uso
+normal (no manda ni `perfil` ni `condicion`).
+
 ## Notas de mantenimiento
 
 - Los selectores de `site-adapters.js` dependen del DOM de cada sitio
@@ -50,8 +63,9 @@ flujo de desarrollo (ver `callBackend()` en `service-worker.js`).
 extension/
 ├── manifest.json          # Configuración MV3, permisos y content scripts
 ├── site-adapters.js        # Selectores por sitio (ChatGPT/Gemini/Claude)
-├── content-script.js       # Intercepción del envío + modal de intervención
+├── content-script.js       # Intercepción del envío + modal de intervención (contextual y genérico)
 ├── content-style.css       # Estilos del modal
 ├── service-worker.js       # Integración con el backend real (fallback a mock) + sincronización de acciones (PATCH /eventos/{id})
+├── popup.html / popup.js   # Popup de "Modo simulación" (Etapa 4): perfil + condición
 └── icons/                  # Íconos placeholder
 ```

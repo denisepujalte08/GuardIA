@@ -36,6 +36,19 @@ async function getUsuarioId() {
 }
 
 // ---------------------------------------------------------------------
+// Modo simulación (Etapa 4, ver docs/diseno_simulacion_etapa4.md):
+// configurado desde popup.js. Cuando está activo, se manda perfil y
+// condicion al backend para poder filtrar los eventos de la
+// simulación, y se le indica al content script qué variante de modal
+// mostrar (contextual o genérico).
+// ---------------------------------------------------------------------
+
+async function obtenerConfigSimulacion() {
+  const { simulacion } = await chrome.storage.local.get("simulacion");
+  return simulacion && simulacion.activo ? simulacion : null;
+}
+
+// ---------------------------------------------------------------------
 // Catálogo de patrones de datos sensibles (versión mock, simplificada)
 // Alineado a los tipos definidos en el marco conceptual: CUIT/CUIL,
 // CBU, credenciales/tokens, emails, y una heurística simple de código
@@ -105,12 +118,19 @@ function extraerFragmento(texto, match) {
 // si el backend local no responde, cae al mock (ver catch más abajo).
 // ---------------------------------------------------------------------
 
-async function callBackend(texto, usuarioId, iaDestino) {
+async function callBackend(texto, usuarioId, iaDestino, config) {
   try {
     const resp = await fetch(`${BACKEND_BASE_URL}/analizar`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ texto, usuario_id: usuarioId, ia_destino: iaDestino }),
+      body: JSON.stringify({
+        texto,
+        usuario_id: usuarioId,
+        ia_destino: iaDestino,
+        // Solo se mandan durante una simulación (ver obtenerConfigSimulacion);
+        // en uso normal quedan ausentes y el backend los deja en null.
+        ...(config ? { perfil: config.perfil, condicion: config.condicion } : {}),
+      }),
     });
     if (!resp.ok) throw new Error("Error del backend: " + resp.status);
     return await resp.json(); // incluye el evento_id real, asignado por el backend
@@ -161,9 +181,13 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.type === "ANALYZE_TEXT") {
     (async () => {
       const usuarioId = await getUsuarioId();
-      const resultado = await callBackend(message.text, usuarioId, message.iaDestino);
+      const config = await obtenerConfigSimulacion();
+      const resultado = await callBackend(message.text, usuarioId, message.iaDestino, config);
 
-      sendResponse(resultado);
+      // condicion no viene en la respuesta del backend (solo se persiste
+      // para poder filtrar después): la agrega acá el service worker para
+      // que content-script.js sepa qué variante de modal mostrar.
+      sendResponse({ ...resultado, condicion: config ? config.condicion : "contextual" });
     })();
     return true; // mantiene el canal abierto para la respuesta async
   }
