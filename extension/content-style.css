@@ -150,6 +150,11 @@
   cursor: pointer;
 }
 
+.dlp-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
 .dlp-btn-primary {
   background: #1d4ed8;
   color: #ffffff;
