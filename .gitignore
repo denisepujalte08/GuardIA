@@ -20,3 +20,6 @@ extension/*.zip
 .vscode/
 .claude/
 *.log
+
+# --- Informes personales (borradores, no se comparten en el repo) ---
+docs/Informe_Final_Denise_Pujalte.md
