@@ -70,6 +70,11 @@
     const nivelLabel =
       nivel_riesgo === "critico" ? "Riesgo crítico" : nivel_riesgo === "alto" ? "Riesgo alto" : "Riesgo medio";
 
+    // Marco Conceptual, Sección 8: se prioriza la explicación sobre la
+    // restricción en riesgo bajo/medio, reservando el bloqueo estricto
+    // (sin opción de continuar) para riesgo alto y crítico.
+    const bloqueoEstricto = nivel_riesgo === "alto" || nivel_riesgo === "critico";
+
     overlay.innerHTML = `
       <div class="dlp-modal" role="dialog" aria-modal="true">
         <div class="dlp-modal-header">
@@ -101,9 +106,20 @@
         <div class="dlp-actions">
           <button class="dlp-btn dlp-btn-primary" data-accion="editar">Editar el texto</button>
           <button class="dlp-btn dlp-btn-secondary" data-accion="cancelar">Cancelar envío</button>
-          <button class="dlp-btn dlp-btn-ghost" data-accion="continuar">Continuar de todos modos</button>
+          <button
+            class="dlp-btn dlp-btn-ghost"
+            data-accion="continuar"
+            ${bloqueoEstricto ? "disabled" : ""}
+            ${bloqueoEstricto ? 'title="No disponible para este nivel de riesgo"' : ""}
+          >Continuar de todos modos</button>
         </div>
-        <p class="dlp-hint">"Editar el texto" es la opción recomendada. "Continuar de todos modos" queda registrado en la auditoría.</p>
+        <p class="dlp-hint">
+          ${
+            bloqueoEstricto
+              ? "Este nivel de riesgo no permite continuar el envío: elegí \"Editar el texto\" o \"Cancelar envío\"."
+              : "\"Editar el texto\" es la opción recomendada. \"Continuar de todos modos\" queda registrado en la auditoría."
+          }
+        </p>
       </div>
     `;
 
