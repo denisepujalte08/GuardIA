@@ -1,0 +1,236 @@
+{
+  "total_eventos": 36,
+  "origenes": [
+    "simulacion_denise",
+    "simulacion_zaira"
+  ],
+  "matriz_por_combinacion": [
+    {
+      "perfil": "apurado",
+      "condicion": "contextual",
+      "nivel_riesgo": "alto",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 2,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "apurado",
+      "condicion": "contextual",
+      "nivel_riesgo": "critico",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 2,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "apurado",
+      "condicion": "contextual",
+      "nivel_riesgo": "medio",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 0,
+      "continuar": 2,
+      "tasa_continuar": 1.0
+    },
+    {
+      "perfil": "apurado",
+      "condicion": "generico",
+      "nivel_riesgo": "alto",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 2,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "apurado",
+      "condicion": "generico",
+      "nivel_riesgo": "critico",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 2,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "apurado",
+      "condicion": "generico",
+      "nivel_riesgo": "medio",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 0,
+      "continuar": 2,
+      "tasa_continuar": 1.0
+    },
+    {
+      "perfil": "cuidadoso",
+      "condicion": "contextual",
+      "nivel_riesgo": "alto",
+      "total_casos": 2,
+      "editar": 2,
+      "cancelar": 0,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "cuidadoso",
+      "condicion": "contextual",
+      "nivel_riesgo": "critico",
+      "total_casos": 2,
+      "editar": 2,
+      "cancelar": 0,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "cuidadoso",
+      "condicion": "contextual",
+      "nivel_riesgo": "medio",
+      "total_casos": 2,
+      "editar": 2,
+      "cancelar": 0,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "cuidadoso",
+      "condicion": "generico",
+      "nivel_riesgo": "alto",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 2,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "cuidadoso",
+      "condicion": "generico",
+      "nivel_riesgo": "critico",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 2,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "cuidadoso",
+      "condicion": "generico",
+      "nivel_riesgo": "medio",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 2,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "esceptico",
+      "condicion": "contextual",
+      "nivel_riesgo": "alto",
+      "total_casos": 2,
+      "editar": 1,
+      "cancelar": 1,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "esceptico",
+      "condicion": "contextual",
+      "nivel_riesgo": "critico",
+      "total_casos": 2,
+      "editar": 1,
+      "cancelar": 1,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "esceptico",
+      "condicion": "contextual",
+      "nivel_riesgo": "medio",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 1,
+      "continuar": 1,
+      "tasa_continuar": 0.5
+    },
+    {
+      "perfil": "esceptico",
+      "condicion": "generico",
+      "nivel_riesgo": "alto",
+      "total_casos": 2,
+      "editar": 2,
+      "cancelar": 0,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "esceptico",
+      "condicion": "generico",
+      "nivel_riesgo": "critico",
+      "total_casos": 2,
+      "editar": 2,
+      "cancelar": 0,
+      "continuar": 0,
+      "tasa_continuar": 0.0
+    },
+    {
+      "perfil": "esceptico",
+      "condicion": "generico",
+      "nivel_riesgo": "medio",
+      "total_casos": 2,
+      "editar": 0,
+      "cancelar": 0,
+      "continuar": 2,
+      "tasa_continuar": 1.0
+    }
+  ],
+  "comparacion_contextual_vs_generico": [
+    {
+      "perfil": "apurado",
+      "contextual": {
+        "total": 6,
+        "editar": 0,
+        "cancelar": 4,
+        "continuar": 2
+      },
+      "generico": {
+        "total": 6,
+        "editar": 0,
+        "cancelar": 4,
+        "continuar": 2
+      }
+    },
+    {
+      "perfil": "cuidadoso",
+      "contextual": {
+        "total": 6,
+        "editar": 6,
+        "cancelar": 0,
+        "continuar": 0
+      },
+      "generico": {
+        "total": 6,
+        "editar": 0,
+        "cancelar": 6,
+        "continuar": 0
+      }
+    },
+    {
+      "perfil": "esceptico",
+      "contextual": {
+        "total": 6,
+        "editar": 2,
+        "cancelar": 3,
+        "continuar": 1
+      },
+      "generico": {
+        "total": 6,
+        "editar": 4,
+        "cancelar": 0,
+        "continuar": 2
+      }
+    }
+  ]
+}
