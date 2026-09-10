@@ -18,7 +18,7 @@ window.__dlpSiteAdapters = [
   {
     id: "chatgpt",
     hostMatch: (host) => host.includes("chatgpt.com"),
-    composerSelector: "#prompt-textarea, form textarea",
+    composerSelector: "#prompt-textarea",
     sendButtonSelector: "[data-testid='send-button'], button[aria-label*='Send' i], button[aria-label*='Enviar' i]",
     getText: (el) => (el.value !== undefined ? el.value : el.innerText) || "",
   },
