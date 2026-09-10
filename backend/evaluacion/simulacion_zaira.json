@@ -1,0 +1,200 @@
+[
+  {
+    "id": "evt-fe1e0c866a",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "claude",
+    "nivel_riesgo": "medio",
+    "tipo_dato_detectado": "Nombre de persona",
+    "accion": "editar",
+    "perfil": "cuidadoso",
+    "condicion": "contextual",
+    "timestamp": "2026-09-10T04:42:05.541184+00:00"
+  },
+  {
+    "id": "evt-92e5de0c44",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "gemini",
+    "nivel_riesgo": "critico",
+    "tipo_dato_detectado": "CUIT/CUIL",
+    "accion": "cancelar",
+    "perfil": "apurado",
+    "condicion": "generico",
+    "timestamp": "2026-09-10T04:41:51.886602+00:00"
+  },
+  {
+    "id": "evt-bc1744880c",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "chatgpt",
+    "nivel_riesgo": "alto",
+    "tipo_dato_detectado": "DNI",
+    "accion": "editar",
+    "perfil": "esceptico",
+    "condicion": "contextual",
+    "timestamp": "2026-09-10T04:41:33.697606+00:00"
+  },
+  {
+    "id": "evt-89613b2608",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "claude",
+    "nivel_riesgo": "alto",
+    "tipo_dato_detectado": "DNI",
+    "accion": "cancelar",
+    "perfil": "cuidadoso",
+    "condicion": "generico",
+    "timestamp": "2026-09-10T04:41:16.781792+00:00"
+  },
+  {
+    "id": "evt-ce91112c07",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "claude",
+    "nivel_riesgo": "medio",
+    "tipo_dato_detectado": "Nombre de persona",
+    "accion": "continuar",
+    "perfil": "apurado",
+    "condicion": "contextual",
+    "timestamp": "2026-09-10T04:41:02.386596+00:00"
+  },
+  {
+    "id": "evt-476943e651",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "gemini",
+    "nivel_riesgo": "critico",
+    "tipo_dato_detectado": "Credencial o token",
+    "accion": "editar",
+    "perfil": "esceptico",
+    "condicion": "generico",
+    "timestamp": "2026-09-10T04:40:45.648133+00:00"
+  },
+  {
+    "id": "evt-0191334d26",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "chatgpt",
+    "nivel_riesgo": "critico",
+    "tipo_dato_detectado": "Credencial o token",
+    "accion": "editar",
+    "perfil": "cuidadoso",
+    "condicion": "contextual",
+    "timestamp": "2026-09-10T04:40:24.439622+00:00"
+  },
+  {
+    "id": "evt-a30842155f",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "claude",
+    "nivel_riesgo": "alto",
+    "tipo_dato_detectado": "DNI",
+    "accion": "cancelar",
+    "perfil": "apurado",
+    "condicion": "generico",
+    "timestamp": "2026-09-10T04:40:08.203385+00:00"
+  },
+  {
+    "id": "evt-d13175769a",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "claude",
+    "nivel_riesgo": "medio",
+    "tipo_dato_detectado": "Nombre de persona",
+    "accion": "cancelar",
+    "perfil": "esceptico",
+    "condicion": "contextual",
+    "timestamp": "2026-09-10T04:39:49.501404+00:00"
+  },
+  {
+    "id": "evt-d37516bd0b",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "claude",
+    "nivel_riesgo": "medio",
+    "tipo_dato_detectado": "Nombre de persona",
+    "accion": "cancelar",
+    "perfil": "cuidadoso",
+    "condicion": "generico",
+    "timestamp": "2026-09-10T04:39:39.475212+00:00"
+  },
+  {
+    "id": "evt-9ce9f86d0f",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "gemini",
+    "nivel_riesgo": "alto",
+    "tipo_dato_detectado": "DNI",
+    "accion": "cancelar",
+    "perfil": "apurado",
+    "condicion": "contextual",
+    "timestamp": "2026-09-10T04:39:16.862080+00:00"
+  },
+  {
+    "id": "evt-5864ecd463",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "gemini",
+    "nivel_riesgo": "alto",
+    "tipo_dato_detectado": "DNI",
+    "accion": "editar",
+    "perfil": "esceptico",
+    "condicion": "generico",
+    "timestamp": "2026-09-10T04:39:00.259253+00:00"
+  },
+  {
+    "id": "evt-8763b5f080",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "gemini",
+    "nivel_riesgo": "alto",
+    "tipo_dato_detectado": "DNI",
+    "accion": "editar",
+    "perfil": "cuidadoso",
+    "condicion": "contextual",
+    "timestamp": "2026-09-10T04:38:46.844972+00:00"
+  },
+  {
+    "id": "evt-ab0a11cd86",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "gemini",
+    "nivel_riesgo": "medio",
+    "tipo_dato_detectado": "Nombre de persona",
+    "accion": "continuar",
+    "perfil": "apurado",
+    "condicion": "generico",
+    "timestamp": "2026-09-10T04:38:22.335815+00:00"
+  },
+  {
+    "id": "evt-ac8ad36ea2",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "chatgpt",
+    "nivel_riesgo": "critico",
+    "tipo_dato_detectado": "Credencial o token",
+    "accion": "editar",
+    "perfil": "esceptico",
+    "condicion": "contextual",
+    "timestamp": "2026-09-10T04:38:09.520658+00:00"
+  },
+  {
+    "id": "evt-a284b5c420",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "chatgpt",
+    "nivel_riesgo": "critico",
+    "tipo_dato_detectado": "Credencial o token",
+    "accion": "cancelar",
+    "perfil": "cuidadoso",
+    "condicion": "generico",
+    "timestamp": "2026-09-10T04:37:56.099061+00:00"
+  },
+  {
+    "id": "evt-a5eb901f81",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "chatgpt",
+    "nivel_riesgo": "critico",
+    "tipo_dato_detectado": "CUIT/CUIL",
+    "accion": "cancelar",
+    "perfil": "apurado",
+    "condicion": "contextual",
+    "timestamp": "2026-09-10T04:37:41.261186+00:00"
+  },
+  {
+    "id": "evt-8c0332b419",
+    "usuario_id": "usr-rd82nnl8",
+    "ia_destino": "chatgpt",
+    "nivel_riesgo": "medio",
+    "tipo_dato_detectado": "Nombre de persona",
+    "accion": "continuar",
+    "perfil": "esceptico",
+    "condicion": "generico",
+    "timestamp": "2026-09-10T04:37:23.487500+00:00"
+  }
+]
