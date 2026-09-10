@@ -60,7 +60,7 @@
     if (overlay) overlay.remove();
   }
 
-  function mostrarModal({ nivel_riesgo, tipo_dato_detectado, fragmento_detectado, mensaje_contextual, evento_id }) {
+  function mostrarModal({ nivel_riesgo, tipo_dato_detectado, fragmento_detectado, mensaje_contextual, evento_id, condicion }) {
     cerrarModal();
 
     const overlay = document.createElement("div");
@@ -72,10 +72,49 @@
 
     // Marco Conceptual, Sección 8: se prioriza la explicación sobre la
     // restricción en riesgo bajo/medio, reservando el bloqueo estricto
-    // (sin opción de continuar) para riesgo alto y crítico.
+    // (sin opción de continuar) para riesgo alto y crítico. Esta regla
+    // de botones es la misma sea cual sea la condición de la simulación
+    // (contextual/genérico, ver docs/diseno_simulacion_etapa4.md) — lo
+    // único que cambia entre ambas es cuánta explicación se muestra.
     const bloqueoEstricto = nivel_riesgo === "alto" || nivel_riesgo === "critico";
+    const esGenerico = condicion === "generico";
 
-    overlay.innerHTML = `
+    const accionesHtml = `
+      <div class="dlp-actions">
+        <button class="dlp-btn dlp-btn-primary" data-accion="editar">Editar el texto</button>
+        <button class="dlp-btn dlp-btn-secondary" data-accion="cancelar">Cancelar envío</button>
+        <button
+          class="dlp-btn dlp-btn-ghost"
+          data-accion="continuar"
+          ${bloqueoEstricto ? "disabled" : ""}
+          ${bloqueoEstricto ? 'title="No disponible para este nivel de riesgo"' : ""}
+        >Continuar de todos modos</button>
+      </div>
+      <p class="dlp-hint">
+        ${
+          esGenerico
+            ? "Este envío fue bloqueado por política de seguridad."
+            : bloqueoEstricto
+              ? "Este nivel de riesgo no permite continuar el envío: elegí \"Editar el texto\" o \"Cancelar envío\"."
+              : "\"Editar el texto\" es la opción recomendada. \"Continuar de todos modos\" queda registrado en la auditoría."
+        }
+      </p>
+    `;
+
+    overlay.innerHTML = esGenerico
+      ? `
+      <div class="dlp-modal" role="dialog" aria-modal="true">
+        <div class="dlp-modal-header">
+          <div class="dlp-modal-icon ${nivelClase}">!</div>
+          <div class="dlp-modal-title-group">
+            <p class="dlp-modal-title">Este envío fue bloqueado por política de seguridad</p>
+            <p class="dlp-modal-subtitle">Destino detectado: ${labelDestino(adapter.id)}</p>
+          </div>
+        </div>
+        ${accionesHtml}
+      </div>
+    `
+      : `
       <div class="dlp-modal" role="dialog" aria-modal="true">
         <div class="dlp-modal-header">
           <div class="dlp-modal-icon ${nivelClase}">!</div>
@@ -103,23 +142,7 @@
         <p class="dlp-section-label">Por qué te lo mostramos:</p>
         <p class="dlp-explanation">${escapeHtml(mensaje_contextual || "")}</p>
 
-        <div class="dlp-actions">
-          <button class="dlp-btn dlp-btn-primary" data-accion="editar">Editar el texto</button>
-          <button class="dlp-btn dlp-btn-secondary" data-accion="cancelar">Cancelar envío</button>
-          <button
-            class="dlp-btn dlp-btn-ghost"
-            data-accion="continuar"
-            ${bloqueoEstricto ? "disabled" : ""}
-            ${bloqueoEstricto ? 'title="No disponible para este nivel de riesgo"' : ""}
-          >Continuar de todos modos</button>
-        </div>
-        <p class="dlp-hint">
-          ${
-            bloqueoEstricto
-              ? "Este nivel de riesgo no permite continuar el envío: elegí \"Editar el texto\" o \"Cancelar envío\"."
-              : "\"Editar el texto\" es la opción recomendada. \"Continuar de todos modos\" queda registrado en la auditoría."
-          }
-        </p>
+        ${accionesHtml}
       </div>
     `;
 

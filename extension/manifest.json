@@ -30,7 +30,8 @@
   ],
 
   "action": {
-    "default_title": "Prevención de Fuga de Datos en IA"
+    "default_title": "Prevención de Fuga de Datos en IA",
+    "default_popup": "popup.html"
   },
 
   "icons": {
