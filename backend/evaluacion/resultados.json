@@ -1,0 +1,419 @@
+{
+  "resumen": {
+    "total_casos": 36,
+    "accuracy_nivel_exacto": 0.8055555555555556,
+    "accuracy_tipo_exacto": 0.8055555555555556,
+    "deteccion_binaria": {
+      "verdaderos_positivos": 20,
+      "falsos_positivos": 3,
+      "verdaderos_negativos": 9,
+      "falsos_negativos": 4,
+      "precision": 0.8695652173913043,
+      "recall": 0.8333333333333334,
+      "f1_score": 0.851063829787234
+    },
+    "tiempo_respuesta_ms": {
+      "promedio": 2.4688250010108783,
+      "maximo": 6.1957999132573605,
+      "minimo": 0.002600019797682762
+    }
+  },
+  "detalle": [
+    {
+      "texto": "Necesito ayuda para escribir una función en Python que ordene una lista",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": null,
+      "tipo_obtenido": null,
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 6.037
+    },
+    {
+      "texto": "¿Cuál es la capital de Francia?",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": null,
+      "tipo_obtenido": null,
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 4.263
+    },
+    {
+      "texto": "Resumime este artículo sobre historia argentina",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": null,
+      "tipo_obtenido": null,
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.618
+    },
+    {
+      "texto": "Dame ideas para un cumpleaños sorpresa",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": null,
+      "tipo_obtenido": null,
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.579
+    },
+    {
+      "texto": "Explicame qué es la fotosíntesis",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": null,
+      "tipo_obtenido": null,
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.044
+    },
+    {
+      "texto": "Ayudame a traducir esta frase al inglés",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": null,
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": false,
+      "tipo_correcto": false,
+      "tiempo_ms": 4.569
+    },
+    {
+      "texto": "def ordenar_lista(numeros): return sorted(numeros)",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": null,
+      "tipo_obtenido": null,
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.023
+    },
+    {
+      "texto": "¿Qué diferencia hay entre un array y una lista enlazada?",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": null,
+      "tipo_obtenido": null,
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.779
+    },
+    {
+      "texto": "Escribime un poema corto sobre el otoño",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": null,
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": false,
+      "tipo_correcto": false,
+      "tiempo_ms": 3.227
+    },
+    {
+      "texto": "Necesito una receta de pastel de papas",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": null,
+      "tipo_obtenido": null,
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.084
+    },
+    {
+      "texto": "Cómo instalar Docker en Windows",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": null,
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": false,
+      "tipo_correcto": false,
+      "tiempo_ms": 3.347
+    },
+    {
+      "texto": "Dame un resumen de las reglas del ajedrez",
+      "categoria": "seguro",
+      "nivel_esperado": "bajo",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": null,
+      "tipo_obtenido": null,
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 4.172
+    },
+    {
+      "texto": "Envié el presupuesto a Juan Perez",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": "Nombre de persona",
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.235
+    },
+    {
+      "texto": "Hablé con María Gómez sobre el contrato",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": "Nombre de persona",
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.236
+    },
+    {
+      "texto": "El cliente se llama Carlos Fernandez",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": "Nombre de persona",
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.196
+    },
+    {
+      "texto": "Trabajo en Acindar desde hace 3 años",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": "Nombre de organización",
+      "tipo_obtenido": null,
+      "nivel_correcto": false,
+      "tipo_correcto": false,
+      "tiempo_ms": 3.785
+    },
+    {
+      "texto": "La reunión es con Roberto Sánchez",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": "Nombre de persona",
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.738
+    },
+    {
+      "texto": "Contactate con Laura Martinez para coordinar",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": "Nombre de persona",
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.161
+    },
+    {
+      "texto": "El proveedor es Molinos Río de la Plata",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": "Nombre de organización",
+      "tipo_obtenido": null,
+      "nivel_correcto": false,
+      "tipo_correcto": false,
+      "tiempo_ms": 3.191
+    },
+    {
+      "texto": "Le mandé el mensaje a Diego Ramirez",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": "Nombre de persona",
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.569
+    },
+    {
+      "texto": "La empresa Techint aprobó el presupuesto",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": "Nombre de organización",
+      "tipo_obtenido": null,
+      "nivel_correcto": false,
+      "tipo_correcto": false,
+      "tiempo_ms": 5.235
+    },
+    {
+      "texto": "Coordiná con Ana Lopez la entrega",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": "Nombre de persona",
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 6.196
+    },
+    {
+      "texto": "El gerente es Pablo Torres",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "medio",
+      "tipo_esperado": "Nombre de persona",
+      "tipo_obtenido": "Nombre de persona",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 3.722
+    },
+    {
+      "texto": "Trabajamos con Mercado Libre en este proyecto",
+      "categoria": "sospechoso",
+      "nivel_esperado": "medio",
+      "nivel_obtenido": "bajo",
+      "tipo_esperado": "Nombre de organización",
+      "tipo_obtenido": null,
+      "nivel_correcto": false,
+      "tipo_correcto": false,
+      "tiempo_ms": 3.782
+    },
+    {
+      "texto": "Mi CUIT es 20-38456712-4",
+      "categoria": "critico",
+      "nivel_esperado": "critico",
+      "nivel_obtenido": "critico",
+      "tipo_esperado": "CUIT/CUIL",
+      "tipo_obtenido": "CUIT/CUIL",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.013
+    },
+    {
+      "texto": "El CBU es 2850590940090418135201",
+      "categoria": "critico",
+      "nivel_esperado": "critico",
+      "nivel_obtenido": "critico",
+      "tipo_esperado": "CBU",
+      "tipo_obtenido": "CBU",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.004
+    },
+    {
+      "texto": "La api_key: sk-12345abcde",
+      "categoria": "critico",
+      "nivel_esperado": "critico",
+      "nivel_obtenido": "critico",
+      "tipo_esperado": "Credencial o token",
+      "tipo_obtenido": "Credencial o token",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.005
+    },
+    {
+      "texto": "Mi contraseña: SuperSecreta123",
+      "categoria": "critico",
+      "nivel_esperado": "critico",
+      "nivel_obtenido": "critico",
+      "tipo_esperado": "Credencial o token",
+      "tipo_obtenido": "Credencial o token",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.007
+    },
+    {
+      "texto": "Mi DNI es 30123456",
+      "categoria": "critico",
+      "nivel_esperado": "alto",
+      "nivel_obtenido": "alto",
+      "tipo_esperado": "DNI",
+      "tipo_obtenido": "DNI",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.005
+    },
+    {
+      "texto": "Mi DNI es 30.123.456",
+      "categoria": "critico",
+      "nivel_esperado": "alto",
+      "nivel_obtenido": "alto",
+      "tipo_esperado": "DNI",
+      "tipo_obtenido": "DNI",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.004
+    },
+    {
+      "texto": "Llamame al 3624 456789",
+      "categoria": "critico",
+      "nivel_esperado": "alto",
+      "nivel_obtenido": "alto",
+      "tipo_esperado": "Teléfono",
+      "tipo_obtenido": "Teléfono",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.006
+    },
+    {
+      "texto": "Mandale un mail a cliente@empresa.com",
+      "categoria": "critico",
+      "nivel_esperado": "alto",
+      "nivel_obtenido": "alto",
+      "tipo_esperado": "Correo electrónico",
+      "tipo_obtenido": "Correo electrónico",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.011
+    },
+    {
+      "texto": "def calcular(cliente): return cliente.total  # parte del sistema interno",
+      "categoria": "critico",
+      "nivel_esperado": "alto",
+      "nivel_obtenido": "alto",
+      "tipo_esperado": "Código o información propietaria",
+      "tipo_obtenido": "Código o información propietaria",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.02
+    },
+    {
+      "texto": "Mi CUIL es 27-30123456-5",
+      "categoria": "critico",
+      "nivel_esperado": "critico",
+      "nivel_obtenido": "critico",
+      "tipo_esperado": "CUIT/CUIL",
+      "tipo_obtenido": "CUIT/CUIL",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.003
+    },
+    {
+      "texto": "El teléfono de la oficina es 011 4444-5555",
+      "categoria": "critico",
+      "nivel_esperado": "alto",
+      "nivel_obtenido": "alto",
+      "tipo_esperado": "Teléfono",
+      "tipo_obtenido": "Teléfono",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.009
+    },
+    {
+      "texto": "token: abcdef123456",
+      "categoria": "critico",
+      "nivel_esperado": "critico",
+      "nivel_obtenido": "critico",
+      "tipo_esperado": "Credencial o token",
+      "tipo_obtenido": "Credencial o token",
+      "nivel_correcto": true,
+      "tipo_correcto": true,
+      "tiempo_ms": 0.003
+    }
+  ]
+}

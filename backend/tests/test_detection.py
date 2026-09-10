@@ -51,6 +51,12 @@ def test_telefono_es_riesgo_alto():
     assert resultado.tipo_dato_detectado == "Teléfono"
 
 
+def test_telefono_con_guion_interno_es_riesgo_alto():
+    resultado = analizar_texto("El teléfono de la oficina es 011 4444-5555")
+    assert resultado.nivel_riesgo == "alto"
+    assert resultado.tipo_dato_detectado == "Teléfono"
+
+
 def test_email_es_riesgo_alto():
     resultado = analizar_texto("Mandale un mail a cliente@empresa.com")
     assert resultado.nivel_riesgo == "alto"

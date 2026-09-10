@@ -75,7 +75,7 @@ REGLAS: list[Regla] = [
     ),
     Regla(
         tipo="Teléfono",
-        patron=re.compile(r"\b(?:\+?54[\s.-]?)?(?:9[\s.-]?)?\d{2,4}[\s.-]\d{6,8}\b|\b\d{10}\b"),
+        patron=re.compile(r"\b(?:\+?54[\s.-]?)?(?:9[\s.-]?)?\d{2,4}[\s.-]\d{3,4}[\s.-]?\d{3,4}\b|\b\d{10}\b"),
         nivel="alto",
         mensaje="Detectamos un número de teléfono en el texto: puede tratarse de un dato personal de un cliente o proveedor.",
     ),
