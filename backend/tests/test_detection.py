@@ -33,6 +33,12 @@ def test_credencial_es_riesgo_critico():
     assert resultado.tipo_dato_detectado == "Credencial o token"
 
 
+def test_clave_sin_dos_puntos_es_riesgo_critico():
+    resultado = analizar_texto("Mi clave es superSecreta123")
+    assert resultado.nivel_riesgo == "critico"
+    assert resultado.tipo_dato_detectado == "Credencial o token"
+
+
 def test_dni_es_riesgo_alto():
     resultado = analizar_texto("Mi DNI es 30123456")
     assert resultado.nivel_riesgo == "alto"
@@ -41,6 +47,12 @@ def test_dni_es_riesgo_alto():
 
 def test_dni_con_puntos_es_riesgo_alto():
     resultado = analizar_texto("Mi DNI es 30.123.456")
+    assert resultado.nivel_riesgo == "alto"
+    assert resultado.tipo_dato_detectado == "DNI"
+
+
+def test_dni_con_espacios_es_riesgo_alto():
+    resultado = analizar_texto("Mi DNI es 30 123 456")
     assert resultado.nivel_riesgo == "alto"
     assert resultado.tipo_dato_detectado == "DNI"
 

@@ -63,13 +63,17 @@ REGLAS: list[Regla] = [
     ),
     Regla(
         tipo="Credencial o token",
-        patron=re.compile(r"(api[_-]?key|token|password|contrase[ñn]a|secret)\s*[:=]\s*\S+", re.IGNORECASE),
+        patron=re.compile(
+            r"\b(api[_-]?key|token|password|contrase[ñn]a|clave|secret|credencial(?:es)?)\b"
+            r"\s*(?:es|son|[:=])?\s*\S+",
+            re.IGNORECASE,
+        ),
         nivel="critico",
         mensaje="El texto parece incluir una credencial o clave de acceso, lo que puede comprometer sistemas de la empresa.",
     ),
     Regla(
         tipo="DNI",
-        patron=re.compile(r"\b\d{1,2}\.\d{3}\.\d{3}\b|\b\d{7,8}\b"),
+        patron=re.compile(r"\b\d{1,2}[.\s]\d{3}[.\s]\d{3}\b|\b\d{7,8}\b"),
         nivel="alto",
         mensaje="Detectamos un DNI en el texto: es un dato personal protegido por la Ley 25.326.",
     ),

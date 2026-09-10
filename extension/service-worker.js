@@ -3,27 +3,21 @@
  *
  * Orquesta la comunicación "hacia afuera" de la extensión.
  *
- * IMPORTANTE - ESTADO ACTUAL (mock):
- * Mientras el motor de análisis de Denise (FastAPI + reglas/regex/NLP)
- * no esté expuesto, este service worker SIMULA la respuesta de
- * POST /analizar con reglas simples (regex), respetando exactamente
- * el contrato ya consolidado:
+ * Contrato con el backend real (Denise, FastAPI):
  *
  *   Request  POST /analizar
  *     { texto, usuario_id, ia_destino }
  *
  *   Response
- *     { nivel_riesgo: "bajo" | "medio" | "alto" | "critico",
+ *     { evento_id: string,
+ *       nivel_riesgo: "bajo" | "medio" | "alto" | "critico",
  *       tipo_dato_detectado: string | null,
  *       fragmento_detectado: string | null,
  *       mensaje_contextual: string | null }
  *
- * Cuando el backend real esté disponible, el ÚNICO cambio necesario es
- * reemplazar la función `mockAnalizar()` por el `fetch()` real hacia
- * `BACKEND_BASE_URL + "/analizar"` (ver la función `callBackend`, que ya
- * tiene la llamada real comentada más abajo). El resto de la extensión
- * (content-script.js) no necesita tocarse porque solo depende del
- * contrato, no de cómo se resuelve.
+ * `callBackend()` intenta ese fetch real y, si el backend local no
+ * responde, cae al mock (`mockAnalizar`) para no bloquear el flujo de
+ * desarrollo — ver el catch de `callBackend`.
  */
 
 const BACKEND_BASE_URL = "http://localhost:8000"; // backend local (Etapa 3). Cambiar cuando exista un despliegue real.
@@ -107,9 +101,8 @@ function extraerFragmento(texto, match) {
 }
 
 // ---------------------------------------------------------------------
-// Punto único de integración con el backend. Hoy resuelve con el mock;
-// el día que el endpoint real exista, se descomenta el fetch y se borra
-// la línea del mock.
+// Punto único de integración con el backend: intenta el fetch real y,
+// si el backend local no responde, cae al mock (ver catch más abajo).
 // ---------------------------------------------------------------------
 
 async function callBackend(texto, usuarioId, iaDestino) {
@@ -120,7 +113,7 @@ async function callBackend(texto, usuarioId, iaDestino) {
       body: JSON.stringify({ texto, usuario_id: usuarioId, ia_destino: iaDestino }),
     });
     if (!resp.ok) throw new Error("Error del backend: " + resp.status);
-    return await resp.json();
+    return await resp.json(); // incluye el evento_id real, asignado por el backend
   } catch (err) {
     // Fallback de desarrollo: si el backend local no está levantado
     // (por ejemplo, mientras se prueba solo la extensión), se usa el
@@ -129,31 +122,34 @@ async function callBackend(texto, usuarioId, iaDestino) {
     // no es el real.
     console.warn("[DLP] Backend no disponible, usando análisis mock local:", err.message);
     await new Promise((r) => setTimeout(r, 150));
-    return mockAnalizar(texto);
+    return {
+      ...mockAnalizar(texto),
+      // Prefijo "mock-" para distinguirlo de un evento_id real del backend:
+      // no existe ningún registro en el servidor contra el cual hacer PATCH.
+      evento_id: "mock-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
+    };
   }
 }
 
 // ---------------------------------------------------------------------
-// Registro de eventos local (mock del "registro de eventos" que en
-// producción vive en el backend y se consulta con GET /eventos desde
-// el dashboard). Guardar acá el mismo shape permite que, cuando el
-// dashboard se conecte al backend real, no haya que cambiar nada del
-// lado de la extensión.
+// Sincronización de la acción elegida en el modal con el backend, que
+// es la única fuente de verdad de los eventos (el dashboard lee de
+// ahí). Si el evento vino del mock (backend caído), no existe ningún
+// registro real contra el cual hacer PATCH.
 // ---------------------------------------------------------------------
 
-async function registrarEvento(evento) {
-  const { eventos = [] } = await chrome.storage.local.get("eventos");
-  eventos.unshift(evento);
-  await chrome.storage.local.set({ eventos: eventos.slice(0, 200) }); // tope simple
-  return evento;
-}
-
 async function actualizarAccionEvento(eventoId, accion) {
-  const { eventos = [] } = await chrome.storage.local.get("eventos");
-  const idx = eventos.findIndex((e) => e.id === eventoId);
-  if (idx !== -1) {
-    eventos[idx].accion = accion;
-    await chrome.storage.local.set({ eventos });
+  if (eventoId.startsWith("mock-")) return; // no hay evento real en el backend contra el cual hacer PATCH
+
+  try {
+    const resp = await fetch(`${BACKEND_BASE_URL}/eventos/${eventoId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ accion }),
+    });
+    if (!resp.ok) throw new Error("Error al actualizar la acción: " + resp.status);
+  } catch (err) {
+    console.warn("[DLP] No se pudo sincronizar la acción con el backend:", err.message);
   }
 }
 
@@ -167,19 +163,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       const usuarioId = await getUsuarioId();
       const resultado = await callBackend(message.text, usuarioId, message.iaDestino);
 
-      const evento = {
-        id: "evt-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
-        usuario_id: usuarioId,
-        ia_destino: message.iaDestino,
-        nivel_riesgo: resultado.nivel_riesgo,
-        tipo_dato_detectado: resultado.tipo_dato_detectado,
-        mensaje_contextual: resultado.mensaje_contextual,
-        accion: resultado.nivel_riesgo === "bajo" ? "permitido_automatico" : null,
-        timestamp: new Date().toISOString(),
-      };
-      await registrarEvento(evento);
-
-      sendResponse({ ...resultado, evento_id: evento.id });
+      sendResponse(resultado);
     })();
     return true; // mantiene el canal abierto para la respuesta async
   }
