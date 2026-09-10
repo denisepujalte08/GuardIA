@@ -40,6 +40,8 @@ def _crear_tabla() -> None:
                 tipo_dato_detectado TEXT,
                 mensaje_contextual TEXT,
                 accion TEXT,
+                perfil TEXT,
+                condicion TEXT,
                 timestamp TEXT NOT NULL
             )
             """
@@ -58,6 +60,8 @@ def _fila_a_evento(fila: sqlite3.Row) -> Evento:
         tipo_dato_detectado=fila["tipo_dato_detectado"],
         mensaje_contextual=fila["mensaje_contextual"],
         accion=fila["accion"],
+        perfil=fila["perfil"],
+        condicion=fila["condicion"],
         timestamp=datetime.fromisoformat(fila["timestamp"]),
     )
 
@@ -68,6 +72,8 @@ def crear_evento(
     nivel_riesgo: str,
     tipo_dato_detectado: Optional[str],
     mensaje_contextual: Optional[str],
+    perfil: Optional[str] = None,
+    condicion: Optional[str] = None,
 ) -> Evento:
     evento = Evento(
         id=f"evt-{uuid.uuid4().hex[:10]}",
@@ -77,6 +83,8 @@ def crear_evento(
         tipo_dato_detectado=tipo_dato_detectado,
         mensaje_contextual=mensaje_contextual,
         accion="permitido_automatico" if nivel_riesgo == "bajo" else None,
+        perfil=perfil,
+        condicion=condicion,
         timestamp=datetime.now(timezone.utc),
     )
     with _conectar() as conn:
@@ -84,8 +92,8 @@ def crear_evento(
             """
             INSERT INTO eventos
                 (id, usuario_id, ia_destino, nivel_riesgo, tipo_dato_detectado,
-                 mensaje_contextual, accion, timestamp)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                 mensaje_contextual, accion, perfil, condicion, timestamp)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 evento.id,
@@ -95,6 +103,8 @@ def crear_evento(
                 evento.tipo_dato_detectado,
                 evento.mensaje_contextual,
                 evento.accion,
+                evento.perfil,
+                evento.condicion,
                 evento.timestamp.isoformat(),
             ),
         )
@@ -112,6 +122,8 @@ def listar_eventos(
     usuario_id: Optional[str] = None,
     ia_destino: Optional[str] = None,
     nivel_riesgo: Optional[str] = None,
+    perfil: Optional[str] = None,
+    condicion: Optional[str] = None,
 ) -> list[Evento]:
     condiciones = []
     parametros: list[str] = []
@@ -124,6 +136,12 @@ def listar_eventos(
     if nivel_riesgo:
         condiciones.append("nivel_riesgo = ?")
         parametros.append(nivel_riesgo)
+    if perfil:
+        condiciones.append("perfil = ?")
+        parametros.append(perfil)
+    if condicion:
+        condiciones.append("condicion = ?")
+        parametros.append(condicion)
 
     consulta = "SELECT * FROM eventos"
     if condiciones:

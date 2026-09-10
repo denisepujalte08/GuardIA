@@ -15,11 +15,19 @@ from pydantic import BaseModel, Field
 NivelRiesgo = Literal["bajo", "medio", "alto", "critico"]
 Accion = Literal["permitido_automatico", "editar", "cancelar", "continuar"]
 
+# Campos opcionales usados solo durante las simulaciones de la Etapa 4
+# (ver docs/diseno_simulacion_etapa4.md). En uso real de la extensión
+# quedan en null.
+Perfil = Literal["cuidadoso", "apurado", "esceptico"]
+Condicion = Literal["contextual", "generico"]
+
 
 class AnalizarRequest(BaseModel):
     texto: str = Field(..., min_length=1, description="Texto capturado por el content script antes del envío")
     usuario_id: str
     ia_destino: Literal["chatgpt", "gemini", "claude"]
+    perfil: Optional[Perfil] = None
+    condicion: Optional[Condicion] = None
 
 
 class AnalizarResponse(BaseModel):
@@ -42,6 +50,8 @@ class Evento(BaseModel):
     tipo_dato_detectado: Optional[str] = None
     mensaje_contextual: Optional[str] = None
     accion: Optional[Accion] = None
+    perfil: Optional[Perfil] = None
+    condicion: Optional[Condicion] = None
     timestamp: datetime
 
 

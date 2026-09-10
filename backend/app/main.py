@@ -63,6 +63,8 @@ def analizar(request: AnalizarRequest):
         nivel_riesgo=resultado.nivel_riesgo,
         tipo_dato_detectado=resultado.tipo_dato_detectado,
         mensaje_contextual=resultado.mensaje_contextual,
+        perfil=request.perfil,
+        condicion=request.condicion,
     )
 
     return AnalizarResponse(
@@ -83,6 +85,18 @@ def actualizar_accion(evento_id: str, request: ActualizarAccionRequest):
 
 
 @app.get("/eventos", response_model=EventosResponse, tags=["eventos"])
-def listar_eventos(usuario_id: str | None = None, ia_destino: str | None = None, nivel_riesgo: str | None = None):
-    eventos = store.listar_eventos(usuario_id=usuario_id, ia_destino=ia_destino, nivel_riesgo=nivel_riesgo)
+def listar_eventos(
+    usuario_id: str | None = None,
+    ia_destino: str | None = None,
+    nivel_riesgo: str | None = None,
+    perfil: str | None = None,
+    condicion: str | None = None,
+):
+    eventos = store.listar_eventos(
+        usuario_id=usuario_id,
+        ia_destino=ia_destino,
+        nivel_riesgo=nivel_riesgo,
+        perfil=perfil,
+        condicion=condicion,
+    )
     return EventosResponse(eventos=eventos, total=len(eventos))
