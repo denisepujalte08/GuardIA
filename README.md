@@ -3,7 +3,7 @@
 Trabajo final de Práctica Profesional Supervisada — UTN Facultad Regional Resistencia / CInApTIC.
 Zaira Rosin (extensión + dashboard) y Denise Pujalte (backend de análisis).
 
-## Qué es esto
+## Sobre el proyecto
 
 Las PyMEs argentinas usan cada vez más herramientas de IA generativa (ChatGPT, Gemini, Claude) sin supervisión, exponiendo sin darse cuenta información sensible de la empresa: datos de clientes, código propietario, credenciales. Este fenómeno se conoce como **Shadow AI**.
 
