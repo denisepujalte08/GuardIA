@@ -10,14 +10,18 @@ dlp-pyme/
 ├── extension/    # Extensión de navegador (Manifest V3) — Zaira
 ├── backend/       # API de análisis en FastAPI — Denise
 ├── dashboard/      # Panel de administración en React — Zaira
-├── docs/            # Marco conceptual y demás documentación
+├── docs/            # Contrato de simulación y perfiles de usuario (Etapa 4)
 └── .gitignore
 ```
 
 Los tres componentes están desacoplados y se comunican por HTTP según
-el contrato documentado en `docs/Marco_Conceptual_y_Arquitectura.docx`
-(Sección 7). Cada uno tiene su propio README con instrucciones
-puntuales.
+el contrato de API descripto en el Marco Conceptual y de Arquitectura
+del proyecto (documentación probatoria de la PPS, entregada aparte del
+repositorio). `docs/` conserva la documentación técnica ligada
+directamente al código: `perfiles_usuario.md` y
+`diseno_simulacion_etapa4.md`, que definen los perfiles de usuario y el
+contrato `perfil`/`condicion` usados en la simulación de la Etapa 4.
+Cada componente tiene su propio README con instrucciones puntuales.
 
 ## Cómo levantar todo en local
 
