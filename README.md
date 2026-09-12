@@ -1,12 +1,20 @@
 # Sistema de Prevención de Fuga de Datos por IA (Shadow AI) — PYMES
 
-Práctica Profesional Supervisada — UTN FRRe / CInApTIC.
+Trabajo final de Práctica Profesional Supervisada — UTN Facultad Regional Resistencia / CInApTIC.
 Zaira Rosin (extensión + dashboard) y Denise Pujalte (backend de análisis).
+
+## Qué es esto
+
+Las PyMEs argentinas usan cada vez más herramientas de IA generativa (ChatGPT, Gemini, Claude) sin supervisión, exponiendo sin darse cuenta información sensible de la empresa: datos de clientes, código propietario, credenciales. Este fenómeno se conoce como **Shadow AI**.
+
+Este proyecto es un sistema liviano que se interpone en el momento exacto en que un empleado intenta enviar ese tipo de información a una IA externa. No bloquea el uso de la herramienta: cuando detecta un dato sensible, muestra una explicación en lenguaje simple de por qué ese dato es riesgoso (intervención contextual), en vez de un bloqueo genérico sin justificación.
+
+Se compone de tres módulos: una extensión de navegador que intercepta el texto antes del envío, un backend que lo analiza combinando expresiones regulares y NLP (spaCy) para clasificar el riesgo, y un dashboard de administración que registra los eventos para auditoría.
 
 ## Estructura del repositorio
 
 ```
-dlp-pyme/
+GuardIA/
 ├── extension/    # Extensión de navegador (Manifest V3) — Zaira
 ├── backend/       # API de análisis en FastAPI — Denise
 ├── dashboard/      # Panel de administración en React — Zaira
