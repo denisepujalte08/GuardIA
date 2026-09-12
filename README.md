@@ -25,7 +25,7 @@ Cada componente tiene su propio README con instrucciones puntuales.
 
 ## Cómo levantar todo en local
 
-Se necesitan 3 terminales abiertas en simultáneo:
+Se necesitan 2 terminales abiertas en simultáneo (backend y dashboard); la extensión no usa terminal, se carga directo desde Chrome:
 
 **1. Backend**
 
